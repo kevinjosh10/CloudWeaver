@@ -13,12 +13,12 @@ export interface CostEstimate {
 }
 
 // Base cost multiplier based on scale level
-const scaleMultipliers: Record<ScaleLevel, number> = {
+export const scaleMultipliers: Record<ScaleLevel, number> = {
   'Low': 1,
-  'Medium': 5,
-  'High': 20,
-  'Very High': 100,
-  'Critical': 500,
+  'Medium': 2.5,
+  'High': 8,
+  'Very High': 20,
+  'Critical': 50,
 };
 
 // Base unit costs (Monthly) for "Low" scale

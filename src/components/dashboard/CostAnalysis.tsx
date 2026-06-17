@@ -45,10 +45,12 @@ export function CostAnalysis() {
         </div>
         
         <div className="my-8">
-          <div className="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-green-400 to-blue-500">
+          <div className="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-green-400 to-blue-500">
             ${costEstimate.total.toLocaleString()}
           </div>
-          <p className="text-gray-500 mt-2">/ month</p>
+          <div className="text-xl font-semibold text-gray-400 mt-2">
+            ₹{(costEstimate.total * 83.5).toLocaleString('en-IN', { maximumFractionDigits: 0 })} <span className="text-sm font-normal">/ month</span>
+          </div>
         </div>
 
         <div className="space-y-4">
@@ -60,7 +62,10 @@ export function CostAnalysis() {
                   <div className="text-gray-200">{service.service}</div>
                   <div className="text-xs text-gray-500">{service.category}</div>
                 </div>
-                <div className="text-white font-medium">${service.monthlyCost.toLocaleString()}</div>
+                <div className="text-right">
+                  <div className="text-white font-medium">${service.monthlyCost.toLocaleString()}</div>
+                  <div className="text-xs text-gray-500">₹{(service.monthlyCost * 83.5).toLocaleString('en-IN', { maximumFractionDigits: 0 })}</div>
+                </div>
               </div>
             ))}
           </div>
@@ -95,7 +100,7 @@ export function CostAnalysis() {
               <RechartsTooltip 
                 contentStyle={{ backgroundColor: 'rgba(10, 10, 10, 0.9)', borderColor: 'rgba(255,255,255,0.1)', borderRadius: '12px' }}
                 itemStyle={{ color: '#fff' }}
-                formatter={(value) => `$${Number(value || 0).toLocaleString()}`}
+                formatter={(value) => `$${Number(value || 0).toLocaleString()} (₹${(Number(value || 0) * 83.5).toLocaleString('en-IN', { maximumFractionDigits: 0 })})`}
               />
               <Legend verticalAlign="bottom" height={36} wrapperStyle={{ color: '#aaa' }} />
             </PieChart>

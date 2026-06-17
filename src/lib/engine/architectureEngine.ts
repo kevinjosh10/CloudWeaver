@@ -23,6 +23,13 @@ export interface ArchitectureRequirements {
   isFreeTier?: boolean;
 }
 
+export interface ArchitectureOverrides {
+  traffic?: ScaleLevel;
+  scaleString?: string;
+  storage?: ScaleLevel;
+  isFreeTier?: boolean;
+}
+
 const typeKeywords: Record<AppType, string[]> = {
   'Streaming': ['netflix', 'youtube', 'spotify', 'video', 'music', 'stream', 'streaming', 'vod'],
   'SaaS': ['saas', 'software as a service', 'b2b', 'subscription', 'platform', 'dashboard', 'workspace'],
@@ -40,7 +47,7 @@ const typeKeywords: Record<AppType, string[]> = {
 // Advanced regex to find numbers followed by scale indicators
 const scaleRegex = /(\d+(?:\.\d+)?)\s*(k|m|b|thousand|million|billion|users|requests)/i;
 
-export function analyzeArchitecture(input: string): ArchitectureRequirements {
+export function analyzeArchitecture(input: string, overrides?: ArchitectureOverrides): ArchitectureRequirements {
   const normalizedInput = input.toLowerCase();
   
   // 1. Detect App Type
@@ -145,13 +152,15 @@ export function analyzeArchitecture(input: string): ArchitectureRequirements {
   }
 
   // 4. Detect Free Tier
-  const isFreeTier = normalizedInput.includes('$0') || normalizedInput.includes('free') || normalizedInput.includes('static');
+  const isFreeTier = overrides?.isFreeTier !== undefined 
+    ? overrides.isFreeTier 
+    : (normalizedInput.includes('$0') || normalizedInput.includes('free') || normalizedInput.includes('static'));
 
   return {
     appType: detectedType,
-    traffic,
-    scale: scaleString,
-    storage,
+    traffic: overrides?.traffic || traffic,
+    scale: overrides?.scaleString || scaleString,
+    storage: overrides?.storage || storage,
     compute,
     latency,
     isFreeTier
