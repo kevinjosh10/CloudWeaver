@@ -94,8 +94,7 @@ export function CostAnalysis() {
               <RechartsTooltip 
                 contentStyle={{ backgroundColor: 'rgba(10, 10, 10, 0.9)', borderColor: 'rgba(255,255,255,0.1)', borderRadius: '12px' }}
                 itemStyle={{ color: '#fff' }}
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                formatter={(value: any) => `$${Number(value || 0).toLocaleString()}`}
+                formatter={(value) => `$${Number(value || 0).toLocaleString()}`}
               />
               <Legend verticalAlign="bottom" height={36} wrapperStyle={{ color: '#aaa' }} />
             </PieChart>
