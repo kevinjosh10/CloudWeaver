@@ -3,6 +3,8 @@ import { ArchitectureRequirements, AppType } from '../lib/engine/architectureEng
 import { Node, Edge } from '@xyflow/react';
 import { CostEstimate } from '../lib/pricing/pricingEngine';
 import { Scores } from '../lib/engine/scoreEngine';
+import { SecurityReport } from '../lib/engine/securityEngine';
+import { ScalingStrategy } from '../lib/engine/scalingEngine';
 
 interface AppState {
   userInput: string;
@@ -18,8 +20,15 @@ interface AppState {
 
   costEstimate: CostEstimate | null;
   setCostEstimate: (estimate: CostEstimate) => void;
+  
   infrastructureScores: Scores | null;
   setInfrastructureScores: (scores: Scores) => void;
+
+  securityReport: SecurityReport | null;
+  setSecurityReport: (report: SecurityReport) => void;
+
+  scalingStrategy: ScalingStrategy | null;
+  setScalingStrategy: (strategy: ScalingStrategy) => void;
   
   reset: () => void;
 }
@@ -41,6 +50,12 @@ export const useStore = create<AppState>((set) => ({
   
   infrastructureScores: null,
   setInfrastructureScores: (infrastructureScores) => set({ infrastructureScores }),
+
+  securityReport: null,
+  setSecurityReport: (securityReport) => set({ securityReport }),
+
+  scalingStrategy: null,
+  setScalingStrategy: (scalingStrategy) => set({ scalingStrategy }),
   
   reset: () => set({
     userInput: '',
@@ -48,6 +63,8 @@ export const useStore = create<AppState>((set) => ({
     nodes: [],
     edges: [],
     costEstimate: null,
-    infrastructureScores: null
+    infrastructureScores: null,
+    securityReport: null,
+    scalingStrategy: null
   })
 }));

@@ -2,12 +2,14 @@ import { useState } from 'react';
 import { ArchitectureCanvas } from '../components/flow/ArchitectureCanvas';
 import { CostAnalysis } from '../components/dashboard/CostAnalysis';
 import { InfrastructureScores } from '../components/dashboard/InfrastructureScores';
+import { SecurityAnalyzer } from '../components/dashboard/SecurityAnalyzer';
+import { ScalingStrategyView } from '../components/dashboard/ScalingStrategy';
 import { useStore } from '../store/useStore';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export function DashboardPage() {
   const { analysisResult } = useStore();
-  const [activeTab, setActiveTab] = useState<'Overview' | 'Architecture' | 'Cost' | 'Security'>('Overview');
+  const [activeTab, setActiveTab] = useState<'Overview' | 'Architecture' | 'Cost' | 'Security' | 'Scaling'>('Overview');
 
   if (!analysisResult) {
     return <div className="text-white text-center mt-20">Please generate an architecture first.</div>;
@@ -17,7 +19,8 @@ export function DashboardPage() {
     { id: 'Overview', label: 'Overview' },
     { id: 'Architecture', label: 'Architecture' },
     { id: 'Cost', label: 'Cost Analysis' },
-    { id: 'Security', label: 'Security' }
+    { id: 'Security', label: 'Security' },
+    { id: 'Scaling', label: 'Scaling' }
   ] as const;
 
   return (
@@ -35,7 +38,7 @@ export function DashboardPage() {
           {tabs.map(tab => (
             <button 
               key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => setActiveTab(tab.id as any)}
               className={`relative h-full px-2 flex items-center transition-colors ${activeTab === tab.id ? 'text-white' : 'text-gray-500 hover:text-gray-300'}`}
             >
               {tab.label}
@@ -78,8 +81,14 @@ export function DashboardPage() {
           )}
 
           {activeTab === 'Security' && (
-            <motion.div key="security" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="p-6 h-full flex items-center justify-center text-gray-500">
-              Security Analyzer incoming in Phase 4...
+            <motion.div key="security" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="p-6 h-full overflow-y-auto">
+              <SecurityAnalyzer />
+            </motion.div>
+          )}
+
+          {activeTab === 'Scaling' && (
+            <motion.div key="scaling" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="p-6 h-full overflow-y-auto">
+              <ScalingStrategyView />
             </motion.div>
           )}
         </AnimatePresence>
