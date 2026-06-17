@@ -96,12 +96,13 @@ export function LandingPage({ onGenerate }: { onGenerate: () => void }) {
         </motion.p>
 
         {/* Wizard Container */}
-        <div className="w-full max-w-2xl relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl blur-lg opacity-20 animate-pulse"></div>
-          
-          <div className="relative w-full bg-[#0a0a0c] border border-white/10 rounded-3xl p-6 shadow-2xl overflow-hidden min-h-[220px] flex flex-col">
+        <div className="w-full max-w-2xl flex flex-col">
+          <div className="relative w-full">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl blur-lg opacity-20 animate-pulse"></div>
             
-            {/* Step Indicators */}
+            <div className="relative w-full bg-[#0a0a0c] border border-white/10 rounded-3xl p-6 shadow-2xl overflow-hidden min-h-[220px] flex flex-col">
+              
+              {/* Step Indicators */}
             <div className="flex justify-between mb-8 relative z-20">
               {[1, 2, 3].map((s) => (
                 <div key={s} className="flex-1 flex items-center">
@@ -192,24 +193,30 @@ export function LandingPage({ onGenerate }: { onGenerate: () => void }) {
               </AnimatePresence>
             </div>
           </div>
+          </div>
           
           {/* Example Prompts - Only show on Step 1 */}
-          <AnimatePresence>
-            {step === 1 && (
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="mt-6 flex flex-wrap justify-center gap-3">
-                {examples.map((example, i) => (
-                  <button
-                    key={i}
-                    type="button"
-                    onClick={() => setUserInput(example)}
-                    className="text-sm px-4 py-2 rounded-full border border-white/10 text-gray-400 hover:text-white hover:border-white/30 transition-colors glass-panel"
-                  >
-                    {example}
-                  </button>
-                ))}
-              </motion.div>
-            )}
-          </AnimatePresence>
+          <div className="min-h-[60px] w-full mt-6">
+            <AnimatePresence>
+              {step === 1 && (
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex flex-wrap justify-center gap-3">
+                  {examples.map((example, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => {
+                        setUserInput(example);
+                        setStep(2);
+                      }}
+                      className="text-sm px-4 py-2 rounded-full border border-white/10 text-gray-400 hover:text-white hover:border-white/30 transition-colors glass-panel"
+                    >
+                      {example}
+                    </button>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
 
         {/* Feature Highlights */}
