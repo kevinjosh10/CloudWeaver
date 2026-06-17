@@ -28,7 +28,7 @@ export function ArchitectureCanvas() {
   // Generate the diagram when the component mounts or analysisResult changes
   useEffect(() => {
     if (!analysisResult) return;
-    
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsGenerating(true);
     const { nodes: initialNodes, edges: initialEdges } = generateDiagram(analysisResult.appType);
     

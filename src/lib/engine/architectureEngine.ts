@@ -89,7 +89,7 @@ export function analyzeArchitecture(input: string): ArchitectureRequirements {
 
   // 3. Determine Needs based on Scale and Type
   let traffic: ScaleLevel = 'Low';
-  let storage: ScaleLevel = 'Low';
+  let storage: ScaleLevel;
   let compute: ScaleLevel = 'Low';
   let latency: ScaleLevel = 'Medium';
 

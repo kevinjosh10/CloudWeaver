@@ -70,6 +70,6 @@ export function generateSecurityReport(appType: AppType, hasDatabase: boolean, h
 
   return {
     score: 100 - (items.filter(i => i.type === 'warning').length * 5),
-    items: items.sort((a, _b) => (a.severity === 'high' ? -1 : 1))
+    items: items.sort((a, b) => a.severity === 'high' ? -1 : (b.severity === 'high' ? 1 : 0))
   };
 }
