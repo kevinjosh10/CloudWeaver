@@ -21,23 +21,26 @@ const nodeTypes = {
 
 export function ArchitectureCanvas() {
   const { analysisResult } = useStore();
-  const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
+  const initialDiagram = analysisResult ? generateDiagram(analysisResult.appType) : { nodes: [], edges: [] };
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node>(initialDiagram.nodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>(initialDiagram.edges);
   const [isGenerating, setIsGenerating] = useState(true);
 
   // Generate the diagram when the component mounts or analysisResult changes
   useEffect(() => {
     if (!analysisResult) return;
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setIsGenerating(true);
-    const { nodes: initialNodes, edges: initialEdges } = generateDiagram(analysisResult.appType);
     
-    // Slight delay to allow the layout to mount before dropping nodes
-    setTimeout(() => {
-      setNodes(initialNodes);
-      setEdges(initialEdges);
+    setIsGenerating(true);
+    const { nodes: newNodes, edges: newEdges } = generateDiagram(analysisResult.appType);
+    setNodes(newNodes);
+    setEdges(newEdges);
+    
+    // Simulate generation overlay for dramatic effect
+    const timer = setTimeout(() => {
       setIsGenerating(false);
-    }, 500);
+    }, 600);
+    
+    return () => clearTimeout(timer);
   }, [analysisResult, setNodes, setEdges]);
 
   // Dark mode specific styles for React Flow background and controls are handled via CSS or props
