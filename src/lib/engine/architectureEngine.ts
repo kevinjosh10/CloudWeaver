@@ -20,6 +20,7 @@ export interface ArchitectureRequirements {
   storage: ScaleLevel;
   compute: ScaleLevel;
   latency: ScaleLevel;
+  isFreeTier?: boolean;
 }
 
 const typeKeywords: Record<AppType, string[]> = {
@@ -143,12 +144,16 @@ export function analyzeArchitecture(input: string): ArchitectureRequirements {
     if (compute === 'Medium') compute = 'High';
   }
 
+  // 4. Detect Free Tier
+  const isFreeTier = normalizedInput.includes('$0') || normalizedInput.includes('free') || normalizedInput.includes('static');
+
   return {
     appType: detectedType,
     traffic,
     scale: scaleString,
     storage,
     compute,
-    latency
+    latency,
+    isFreeTier
   };
 }

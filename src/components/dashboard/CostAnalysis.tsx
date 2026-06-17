@@ -15,7 +15,8 @@ export function CostAnalysis() {
         analysisResult.appType,
         analysisResult.traffic,
         analysisResult.storage,
-        analysisResult.compute
+        analysisResult.compute,
+        analysisResult.isFreeTier
       );
       setCostEstimate(estimate);
     }

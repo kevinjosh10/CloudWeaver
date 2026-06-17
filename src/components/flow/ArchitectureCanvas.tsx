@@ -21,7 +21,7 @@ const nodeTypes = {
 
 export function ArchitectureCanvas() {
   const { analysisResult } = useStore();
-  const initialDiagram = analysisResult ? generateDiagram(analysisResult.appType) : { nodes: [], edges: [] };
+  const initialDiagram = analysisResult ? generateDiagram(analysisResult.appType, analysisResult.isFreeTier) : { nodes: [], edges: [] };
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>(initialDiagram.nodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>(initialDiagram.edges);
   const [isGenerating, setIsGenerating] = useState(true);
@@ -31,7 +31,7 @@ export function ArchitectureCanvas() {
     if (!analysisResult) return;
     
     setIsGenerating(true);
-    const { nodes: newNodes, edges: newEdges } = generateDiagram(analysisResult.appType);
+    const { nodes: newNodes, edges: newEdges } = generateDiagram(analysisResult.appType, analysisResult.isFreeTier);
     setNodes(newNodes);
     setEdges(newEdges);
     

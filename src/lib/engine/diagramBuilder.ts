@@ -93,6 +93,17 @@ const templates: Record<string, { nodes: CustomNode[], edges: Edge[] }> = {
       { id: 'e3', source: 'lambda', target: 'dynamo', animated: true, markerEnd: { type: MarkerType.ArrowClosed } },
     ]
   },
+  'Static': {
+    nodes: [
+      { id: 'github', type: 'serviceNode', position: { x: 250, y: 50 }, data: { label: 'GitHub', iconName: 'Github', serviceCategory: 'edge', index: 0 } },
+      { id: 'vercel', type: 'serviceNode', position: { x: 250, y: 200 }, data: { label: 'Vercel Edge', iconName: 'Triangle', serviceCategory: 'network', index: 1 } },
+      { id: 'supabase', type: 'serviceNode', position: { x: 250, y: 350 }, data: { label: 'Supabase (Free)', iconName: 'Database', serviceCategory: 'database', index: 2 } },
+    ],
+    edges: [
+      { id: 'e1', source: 'github', target: 'vercel', animated: true, markerEnd: { type: MarkerType.ArrowClosed } },
+      { id: 'e2', source: 'vercel', target: 'supabase', animated: true, markerEnd: { type: MarkerType.ArrowClosed } },
+    ]
+  },
   // Default fallback map for other types
   'Unknown': {
     nodes: [
@@ -115,7 +126,10 @@ templates['Social Media'] = templates['SaaS']; // simplified for now
 templates['Portfolio'] = templates['Blog'];
 templates['Enterprise'] = templates['SaaS'];
 
-export function generateDiagram(appType: AppType) {
+export function generateDiagram(appType: AppType, isFreeTier: boolean = false) {
+  if (isFreeTier) {
+    return JSON.parse(JSON.stringify(templates['Static']));
+  }
   const template = templates[appType] || templates['Unknown'];
   return JSON.parse(JSON.stringify(template));
 }

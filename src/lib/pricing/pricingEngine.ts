@@ -54,8 +54,8 @@ const categoryMap: Record<string, ServiceCost['category']> = {
   'db': 'Database'
 };
 
-export function estimateCost(appType: AppType, traffic: ScaleLevel, storage: ScaleLevel, compute: ScaleLevel): CostEstimate {
-  const { nodes } = generateDiagram(appType);
+export function estimateCost(appType: AppType, traffic: ScaleLevel, storage: ScaleLevel, compute: ScaleLevel, isFreeTier: boolean = false): CostEstimate {
+  const { nodes } = generateDiagram(appType, isFreeTier);
   
   const services: ServiceCost[] = nodes.map(node => {
     const serviceId = node.id.split('-')[0]; // Handle cases like s3-1, s3-2
@@ -66,12 +66,13 @@ export function estimateCost(appType: AppType, traffic: ScaleLevel, storage: Sca
     if (categoryMap[baseId] === 'Storage') multiplier = scaleMultipliers[storage];
     if (categoryMap[baseId] === 'Compute') multiplier = scaleMultipliers[compute];
     
-    const cost = basePricing[baseId] * multiplier;
+    // If it's the free tier, force cost to 0
+    const cost = isFreeTier ? 0 : basePricing[baseId] * multiplier;
     
     return {
       service: node.data.label,
       monthlyCost: cost,
-      category: categoryMap[baseId]
+      category: categoryMap[baseId] || 'Compute'
     };
   });
 
