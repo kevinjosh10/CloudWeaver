@@ -117,5 +117,5 @@ templates['Enterprise'] = templates['SaaS'];
 
 export function generateDiagram(appType: AppType) {
   const template = templates[appType] || templates['Unknown'];
-  return template;
+  return JSON.parse(JSON.stringify(template));
 }

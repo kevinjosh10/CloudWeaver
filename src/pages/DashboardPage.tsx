@@ -98,8 +98,8 @@ export function DashboardPage() {
           {activeTab === 'Exports' && (
             <motion.div key="exports" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="p-6 h-full overflow-y-auto">
               <ExportPanel />
-              {/* Render an invisible ArchitectureCanvas strictly for html2canvas capturing if we are on the exports tab without navigating away. Actually we'll just let ReactFlow render invisibly. */}
-              <div className="absolute inset-0 opacity-0 pointer-events-none -z-50">
+              {/* Render an off-screen ArchitectureCanvas strictly for html2canvas capturing */}
+              <div className="fixed top-[-10000px] left-[-10000px] w-[1200px] h-[800px]">
                  <ArchitectureCanvas />
               </div>
             </motion.div>
