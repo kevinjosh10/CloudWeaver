@@ -96,13 +96,14 @@ export function DashboardPage() {
           )}
 
           {activeTab === 'Exports' && (
-            <motion.div key="exports" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 p-6 overflow-y-auto">
+            <motion.div key="exports" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 p-6 flex flex-col gap-6 overflow-y-auto">
               <ExportPanel />
-              {/* Render a zero-dimension wrapper so the user sees nothing, but provide a 1200x800 canvas inside for exporting. */}
-              <div className="absolute top-0 left-0 w-0 h-0 overflow-hidden pointer-events-none">
-                <div className="w-[1200px] h-[800px]">
-                  <ArchitectureCanvas />
+              
+              <div className="w-full flex-1 min-h-[500px] border border-white/5 rounded-2xl overflow-hidden relative">
+                <div className="absolute inset-0 z-10 flex items-center justify-center bg-[#050505]/20 backdrop-blur-[2px] pointer-events-none">
+                  <span className="px-4 py-2 rounded-xl bg-black/50 text-white/70 font-semibold tracking-wider text-sm border border-white/10 backdrop-blur-md">EXPORT PREVIEW</span>
                 </div>
+                <ArchitectureCanvas />
               </div>
             </motion.div>
           )}

@@ -22,8 +22,16 @@ const nodeTypes = {
 export function ArchitectureCanvas() {
   const { analysisResult } = useStore();
   const initialDiagram = analysisResult ? generateDiagram(analysisResult.appType, analysisResult.isFreeTier) : { nodes: [], edges: [] };
+  
+  // Format edges to force inline styling and disable CSS animations so html-to-image can capture them
+  const formattedInitialEdges = initialDiagram.edges.map(edge => ({
+    ...edge,
+    animated: false,
+    style: { stroke: '#4b5563', strokeWidth: 2, ...edge.style }
+  }));
+
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>(initialDiagram.nodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>(initialDiagram.edges);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>(formattedInitialEdges);
   const [isGenerating, setIsGenerating] = useState(true);
 
   // Generate the diagram when the component mounts or analysisResult changes
@@ -32,8 +40,15 @@ export function ArchitectureCanvas() {
     
     setIsGenerating(true);
     const { nodes: newNodes, edges: newEdges } = generateDiagram(analysisResult.appType, analysisResult.isFreeTier);
+    
+    const formattedNewEdges = newEdges.map(edge => ({
+      ...edge,
+      animated: false,
+      style: { stroke: '#4b5563', strokeWidth: 2, ...edge.style }
+    }));
+
     setNodes(newNodes);
-    setEdges(newEdges);
+    setEdges(formattedNewEdges);
     
     // Simulate generation overlay for dramatic effect
     const timer = setTimeout(() => {
