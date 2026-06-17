@@ -1,23 +1,26 @@
 import { create } from 'zustand';
 import { ArchitectureRequirements, AppType } from '../lib/engine/architectureEngine';
 import { Node, Edge } from '@xyflow/react';
+import { CostEstimate } from '../lib/pricing/pricingEngine';
+import { Scores } from '../lib/engine/scoreEngine';
 
 interface AppState {
-  // Input
   userInput: string;
   setUserInput: (input: string) => void;
   
-  // Analysis
   analysisResult: ArchitectureRequirements | null;
   setAnalysisResult: (result: ArchitectureRequirements) => void;
   
-  // Architecture Flow
   nodes: Node[];
   edges: Edge[];
   setNodes: (nodes: Node[]) => void;
   setEdges: (edges: Edge[]) => void;
+
+  costEstimate: CostEstimate | null;
+  setCostEstimate: (estimate: CostEstimate) => void;
+  infrastructureScores: Scores | null;
+  setInfrastructureScores: (scores: Scores) => void;
   
-  // Actions
   reset: () => void;
 }
 
@@ -32,11 +35,19 @@ export const useStore = create<AppState>((set) => ({
   edges: [],
   setNodes: (nodes) => set({ nodes }),
   setEdges: (edges) => set({ edges }),
+
+  costEstimate: null,
+  setCostEstimate: (costEstimate) => set({ costEstimate }),
+  
+  infrastructureScores: null,
+  setInfrastructureScores: (infrastructureScores) => set({ infrastructureScores }),
   
   reset: () => set({
     userInput: '',
     analysisResult: null,
     nodes: [],
-    edges: []
+    edges: [],
+    costEstimate: null,
+    infrastructureScores: null
   })
 }));
