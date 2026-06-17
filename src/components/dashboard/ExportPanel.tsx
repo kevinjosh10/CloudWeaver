@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FileImage, FileText, FileJson, Loader2 } from 'lucide-react';
-import html2canvas from 'html2canvas';
+import { toPng } from 'html-to-image';
 import { jsPDF } from 'jspdf';
 import { useStore } from '../../store/useStore';
 
@@ -16,8 +16,7 @@ export function ExportPanel() {
       const element = document.querySelector('.react-flow') as HTMLElement;
       if (!element) throw new Error("Architecture canvas not found");
       
-      const canvas = await html2canvas(element, { backgroundColor: '#050505' });
-      const dataUrl = canvas.toDataURL('image/png');
+      const dataUrl = await toPng(element, { backgroundColor: '#050505', width: 1200, height: 800 });
       
       const link = document.createElement('a');
       link.download = `CloudWeaver_${analysisResult?.appType}_Architecture.png`;
@@ -37,16 +36,15 @@ export function ExportPanel() {
       const element = document.querySelector('.react-flow') as HTMLElement;
       if (!element) throw new Error("Architecture canvas not found");
       
-      const canvas = await html2canvas(element, { backgroundColor: '#050505' });
-      const imgData = canvas.toDataURL('image/png');
+      const imgData = await toPng(element, { backgroundColor: '#050505', width: 1200, height: 800 });
       
       const pdf = new jsPDF({
         orientation: 'landscape',
         unit: 'px',
-        format: [canvas.width, canvas.height]
+        format: [1200, 800]
       });
       
-      pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+      pdf.addImage(imgData, 'PNG', 0, 0, 1200, 800);
       pdf.save(`CloudWeaver_${analysisResult?.appType}_Report.pdf`);
     } catch (e) {
       console.error(e);

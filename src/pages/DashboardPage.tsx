@@ -59,7 +59,7 @@ export function DashboardPage() {
       </header>
 
       {/* Main Content Area */}
-      <main className="flex-1 overflow-hidden relative">
+      <main className="flex-1 overflow-hidden relative flex flex-col">
         <AnimatePresence mode="wait">
           {activeTab === 'Overview' && (
             <motion.div key="overview" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="p-6 h-full flex flex-col gap-6 overflow-y-auto">
@@ -72,7 +72,7 @@ export function DashboardPage() {
           )}
 
           {activeTab === 'Architecture' && (
-            <motion.div key="architecture" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="p-6 h-full">
+            <motion.div key="architecture" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="p-6 flex-1 h-full w-full relative">
               <ArchitectureCanvas />
             </motion.div>
           )}
@@ -98,9 +98,11 @@ export function DashboardPage() {
           {activeTab === 'Exports' && (
             <motion.div key="exports" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="p-6 h-full overflow-y-auto">
               <ExportPanel />
-              {/* Render an off-screen ArchitectureCanvas strictly for html2canvas capturing */}
-              <div className="fixed top-[-10000px] left-[-10000px] w-[1200px] h-[800px]">
-                 <ArchitectureCanvas />
+              {/* Render a zero-dimension wrapper so the user sees nothing, but provide a 1200x800 canvas inside for exporting. */}
+              <div className="absolute top-0 left-0 w-0 h-0 overflow-hidden pointer-events-none">
+                <div className="w-[1200px] h-[800px]">
+                  <ArchitectureCanvas />
+                </div>
               </div>
             </motion.div>
           )}
