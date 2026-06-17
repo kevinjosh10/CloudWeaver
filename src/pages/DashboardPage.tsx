@@ -62,7 +62,7 @@ export function DashboardPage() {
       <main className="flex-1 overflow-hidden relative flex flex-col">
         <AnimatePresence mode="wait">
           {activeTab === 'Overview' && (
-            <motion.div key="overview" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="p-6 h-full flex flex-col gap-6 overflow-y-auto">
+            <motion.div key="overview" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 p-6 flex flex-col gap-6 overflow-y-auto">
               <InfrastructureScores />
               <div className="flex-1 min-h-[500px] border border-white/5 rounded-2xl overflow-hidden relative">
                 {/* To allow html2canvas to capture the architecture view properly from the overview tab, we add a class here too. */}
@@ -72,31 +72,31 @@ export function DashboardPage() {
           )}
 
           {activeTab === 'Architecture' && (
-            <motion.div key="architecture" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="p-6 flex-1 h-full w-full relative">
+            <motion.div key="architecture" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 p-6">
               <ArchitectureCanvas />
             </motion.div>
           )}
 
           {activeTab === 'Cost' && (
-            <motion.div key="cost" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="p-6 h-full overflow-y-auto">
+            <motion.div key="cost" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 p-6 overflow-y-auto">
               <CostAnalysis />
             </motion.div>
           )}
 
           {activeTab === 'Security' && (
-            <motion.div key="security" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="p-6 h-full overflow-y-auto">
+            <motion.div key="security" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 p-6 overflow-y-auto">
               <SecurityAnalyzer />
             </motion.div>
           )}
 
           {activeTab === 'Scaling' && (
-            <motion.div key="scaling" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="p-6 h-full overflow-y-auto">
+            <motion.div key="scaling" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 p-6 overflow-y-auto">
               <ScalingStrategyView />
             </motion.div>
           )}
 
           {activeTab === 'Exports' && (
-            <motion.div key="exports" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="p-6 h-full overflow-y-auto">
+            <motion.div key="exports" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 p-6 overflow-y-auto">
               <ExportPanel />
               {/* Render a zero-dimension wrapper so the user sees nothing, but provide a 1200x800 canvas inside for exporting. */}
               <div className="absolute top-0 left-0 w-0 h-0 overflow-hidden pointer-events-none">
