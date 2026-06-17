@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Download, FileImage, FileText, FileJson, Loader2 } from 'lucide-react';
+import { FileImage, FileText, FileJson, Loader2 } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import { useStore } from '../../store/useStore';
 
 export function ExportPanel() {
-  const { analysisResult, costEstimate, infrastructureScores, securityReport, scalingStrategy } = useStore();
+  const { analysisResult, costEstimate, infrastructureScores, securityReport } = useStore();
   const [isExportingImage, setIsExportingImage] = useState(false);
   const [isExportingPDF, setIsExportingPDF] = useState(false);
 

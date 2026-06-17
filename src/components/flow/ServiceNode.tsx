@@ -1,16 +1,18 @@
 import { memo } from 'react';
-import { Handle, Position, NodeProps } from '@xyflow/react';
+import { Handle, Position, NodeProps, Node } from '@xyflow/react';
 import { motion } from 'framer-motion';
 import * as Icons from 'lucide-react';
 
-export type ServiceNodeType = {
+export type ServiceNodeData = {
   label: string;
-  iconName: keyof typeof Icons;
-  serviceCategory: 'compute' | 'storage' | 'database' | 'network' | 'cache' | 'edge';
-  index: number; // For staggered animation
+  iconName: string;
+  serviceCategory: string;
+  index: number;
 };
 
-const categoryColors = {
+export type ServiceNodeType = Node<ServiceNodeData, 'serviceNode'>;
+
+const categoryColors: Record<string, string> = {
   compute: 'from-orange-500 to-orange-600 border-orange-500/50 text-orange-100',
   storage: 'from-green-500 to-green-600 border-green-500/50 text-green-100',
   database: 'from-blue-500 to-blue-600 border-blue-500/50 text-blue-100',
@@ -20,7 +22,8 @@ const categoryColors = {
 };
 
 export const ServiceNode = memo(({ data, isConnectable }: NodeProps<ServiceNodeType>) => {
-  const Icon = Icons[data.iconName] as React.ElementType || Icons.Server;
+  const IconName = data.iconName as keyof typeof Icons;
+  const Icon = Icons[IconName] as React.ElementType || Icons.Server;
   const colorClass = categoryColors[data.serviceCategory] || categoryColors.compute;
 
   return (

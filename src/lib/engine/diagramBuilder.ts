@@ -1,10 +1,10 @@
 import { AppType } from './architectureEngine';
 import { Node, Edge, MarkerType } from '@xyflow/react';
-import { ServiceNodeType } from '../../components/flow/ServiceNode';
+import { ServiceNodeData } from '../../components/flow/ServiceNode';
 
-type CustomNode = Node<ServiceNodeType>;
+type CustomNode = Node<ServiceNodeData>;
 
-const templates: Record<AppType | 'Unknown', { nodes: CustomNode[], edges: Edge[] }> = {
+const templates: Record<string, { nodes: CustomNode[], edges: Edge[] }> = {
   'Streaming': {
     nodes: [
       { id: 'cloudfront', type: 'serviceNode', position: { x: 250, y: 50 }, data: { label: 'CloudFront', iconName: 'Globe', serviceCategory: 'edge', index: 0 } },

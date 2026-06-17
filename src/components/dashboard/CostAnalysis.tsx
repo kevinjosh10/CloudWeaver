@@ -87,14 +87,14 @@ export function CostAnalysis() {
                 dataKey="value"
                 stroke="rgba(255,255,255,0.05)"
               >
-                {pieData.map((entry, index) => (
+                {pieData.map((_entry, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
               <RechartsTooltip 
                 contentStyle={{ backgroundColor: 'rgba(10, 10, 10, 0.9)', borderColor: 'rgba(255,255,255,0.1)', borderRadius: '12px' }}
                 itemStyle={{ color: '#fff' }}
-                formatter={(value: number) => `$${value.toLocaleString()}`}
+                formatter={(value: any) => `$${Number(value).toLocaleString()}`}
               />
               <Legend verticalAlign="bottom" height={36} wrapperStyle={{ color: '#aaa' }} />
             </PieChart>

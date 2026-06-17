@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, ArrowRight, Cloud, Database, Lock, Zap } from 'lucide-react';
+import { Sparkles, ArrowRight, Cloud, Database, Lock } from 'lucide-react';
 import { useStore } from '../store/useStore';
 import { analyzeArchitecture } from '../lib/engine/architectureEngine';
 

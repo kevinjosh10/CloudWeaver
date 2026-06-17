@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { 
   ReactFlow, 
   Background, 
@@ -6,7 +6,9 @@ import {
   useNodesState, 
   useEdgesState,
   Panel,
-  BackgroundVariant
+  BackgroundVariant,
+  Node,
+  Edge
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { useStore } from '../../store/useStore';
@@ -19,8 +21,8 @@ const nodeTypes = {
 
 export function ArchitectureCanvas() {
   const { analysisResult } = useStore();
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const [isGenerating, setIsGenerating] = useState(true);
 
   // Generate the diagram when the component mounts or analysisResult changes

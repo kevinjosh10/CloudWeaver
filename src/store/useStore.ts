@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { ArchitectureRequirements, AppType } from '../lib/engine/architectureEngine';
+import { ArchitectureRequirements } from '../lib/engine/architectureEngine';
 import { Node, Edge } from '@xyflow/react';
 import { CostEstimate } from '../lib/pricing/pricingEngine';
 import { Scores } from '../lib/engine/scoreEngine';
